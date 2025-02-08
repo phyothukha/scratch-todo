@@ -37,7 +37,7 @@ async function main() {
       create: {
         id: task.id,
         title: task.title,
-        status: task.status,
+        status: task.status as "task" | "doing" | "done" | "todo", // Ensure it matches the enum type
       },
     });
   }

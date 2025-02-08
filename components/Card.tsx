@@ -4,8 +4,9 @@ import { IconTrash } from "@tabler/icons-react";
 import DropZone from "./DropZone";
 import { Button } from "./ui/button";
 import { Card, CardContent, CardHeader } from "./ui/card";
-import Image from "next/image";
 import { CardProp } from "@/app/page";
+import UpdateTaskDialog from "./UpdateTaskDialog";
+import { cn } from "@/lib/utils";
 
 interface cardItemProp {
   cardItem: CardProp;
@@ -23,7 +24,8 @@ const CardItem = ({ cardItem, handleDragStart, deleteCard }: cardItemProp) => {
           draggable
           onDragStart={(e) => handleDragStart(e, cardItem.id)}
         >
-          <div className=" top-2 z-20 sright-2 absolute right-2">
+          <div className=" top-2 z-20 sright-2 flex gap-2 items-center absolute right-2">
+            <UpdateTaskDialog cardItem={cardItem} />
             <Button
               className=" cursor-pointer size-8"
               variant="destructive"
@@ -34,24 +36,18 @@ const CardItem = ({ cardItem, handleDragStart, deleteCard }: cardItemProp) => {
             </Button>
           </div>
           <CardHeader className="flex pb-0 gap-3">
-            <div className="flex flex-col">
-              <p
-                className={`text-md  font-semibold  ${SelectColor.get(cardItem.status)} `}
-              >
-                Project Title
-              </p>
-              <p className="text-[12px] text-default-500">github.com</p>
-            </div>
+            <h3>{cardItem.title.substring(0, 20)}...</h3>
+            <p
+              className={cn(
+                "text-[12px] text-default-500",
+                SelectColor.get(cardItem.status),
+              )}
+            >
+              {SelectText.get(cardItem.status)}
+            </p>
           </CardHeader>
           <CardContent className=" text-neutral-500 text-[12px]">
             <p className=" mb-3"> {cardItem.title}</p>
-            <Image
-              alt="nextui logo"
-              width={100}
-              height={100}
-              className=" object-cover w-full rounded-md"
-              src="https://plus.unsplash.com/premium_photo-1717279908053-e0e8618eca45?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHw1fHx8ZW58MHx8fHx8"
-            />
           </CardContent>
         </Card>
       </motion.div>
@@ -66,4 +62,11 @@ const SelectColor = new Map([
   ["todo", "text-green-500"],
   ["doing", "text-yellow-500"],
   ["done", "text-purple-500"],
+]);
+
+const SelectText = new Map([
+  ["task", "Task"],
+  ["todo", "Todo"],
+  ["doing", "In Progress"],
+  ["done", "Finish"],
 ]);

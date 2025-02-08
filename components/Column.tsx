@@ -16,7 +16,6 @@ interface dataProp {
 const Column = ({ column, cards, setCards, title }: dataProp) => {
   const filterCard = cards?.filter((c) => c.status === column);
 
-  //===== All DropZone Indicators =====//
   const getAllIndicators = (): HTMLDivElement[] => {
     return Array.from(document.querySelectorAll(`[data-column=${column}]`));
   };
@@ -87,7 +86,7 @@ const Column = ({ column, cards, setCards, title }: dataProp) => {
     clearHighlights(e);
   };
 
-  const handleDrop = (e: DragEvent<HTMLDivElement>) => {
+  const handleDrop = async (e: DragEvent<HTMLDivElement>) => {
     const cardId = e.dataTransfer.getData("cardId");
     const indicators = getAllIndicators();
     const el = getNearestIndicators(e, indicators);
@@ -99,6 +98,7 @@ const Column = ({ column, cards, setCards, title }: dataProp) => {
       const findCard = cards.find((c) => c.id === cardId);
 
       if (!findCard) return;
+
       const updateCardStatus: CardProp = { ...findCard, status: column };
 
       if (!updateCardStatus) return;
@@ -111,18 +111,57 @@ const Column = ({ column, cards, setCards, title }: dataProp) => {
         newCard.push(updateCardStatus || []);
       } else {
         const insertIndex = newCard.findIndex((c) => c.id === beforeId);
-
         newCard.splice(insertIndex, 0, updateCardStatus);
       }
 
       setCards(newCard);
+
+      // Update the status in the database
+      await updateCardStatusInDatabase(updateCardStatus);
     }
   };
 
-  //===== Delete Card =====//
+  // Function to update the card's status in the database
+  const updateCardStatusInDatabase = async (card: CardProp) => {
+    try {
+      const response = await fetch("/api/todos", {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ ...card, status: card.status }),
+      });
 
-  const deleteCard = (id: string) => {
-    return setCards((pre) => pre?.filter((card) => card.id !== id));
+      if (!response.ok) {
+        throw new Error("Failed to update the card status");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const deleteCard = async (id: string) => {
+    await deleteCardFromDatabase(id);
+    setCards((pre) => pre?.filter((card) => card.id !== id));
+  };
+
+  // Function to delete the card from the database
+  const deleteCardFromDatabase = async (id: string) => {
+    try {
+      const response = await fetch("/api/delete-card", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to delete the card");
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (

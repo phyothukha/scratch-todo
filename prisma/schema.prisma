@@ -14,8 +14,14 @@ datasource db {
 }
 
 
+enum TaskStatus {
+  done
+  task
+  doing
+  todo
+}
 model Task {
   id      String @id @default(uuid())
   title   String
-  status String
+  status TaskStatus @default(task)
 }

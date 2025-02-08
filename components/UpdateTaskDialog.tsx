@@ -4,7 +4,7 @@ import { toast } from "@/hooks/use-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { useState } from "react";
+import { FC, useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -15,7 +15,14 @@ import {
 } from "./ui/dialog";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
-import { IconPlus } from "@tabler/icons-react";
+import { IconEdit } from "@tabler/icons-react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "./ui/select";
 import { Loader2 } from "lucide-react";
 import {
   Form,
@@ -25,40 +32,44 @@ import {
   FormLabel,
   FormMessage,
 } from "./ui/form";
+import { CardProp } from "@/app/page";
 
 const formSchema = z.object({
   title: z.string().min(1, "Title is required"),
   status: z.string().min(1, "Status is required"),
 });
 
-interface TodoFormProps {
-  refreshTodos: () => void;
+interface UpdateTaskDialogProps {
+  cardItem: CardProp;
 }
 
-export default function TodoForm({ refreshTodos }: TodoFormProps) {
+const UpdateTaskDialog: FC<UpdateTaskDialogProps> = ({ cardItem }) => {
   const [open, setopen] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: { title: "", status: "" },
+    defaultValues: {
+      title: cardItem.title,
+      status: cardItem.status,
+    },
   });
 
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     setLoading(true);
 
     const response = await fetch("/api/todos", {
-      method: "POST",
+      method: "PATCH",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
+      body: JSON.stringify({ id: cardItem.id, ...data }),
     });
 
     setLoading(false);
 
     if (response.ok) {
       form.reset();
-      toast({ description: "Task added successfully!" });
-      refreshTodos();
+      toast({ description: "Task updated successfully!" });
+      window.location.reload();
       setopen(false);
     } else {
       toast({ description: "Failed to add task!", variant: "destructive" });
@@ -68,14 +79,13 @@ export default function TodoForm({ refreshTodos }: TodoFormProps) {
   return (
     <Dialog onOpenChange={setopen} open={open}>
       <DialogTrigger asChild>
-        <Button variant="outline">
-          <IconPlus />
-          Add Task
+        <Button variant="outline" size="icon" className=" bg-white">
+          <IconEdit className=" stroke-green-400" />
         </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Add task</DialogTitle>
+          <DialogTitle>Update task</DialogTitle>
           <DialogDescription>
             Enter task details and click submit.
           </DialogDescription>
@@ -103,7 +113,17 @@ export default function TodoForm({ refreshTodos }: TodoFormProps) {
                 <FormItem>
                   <FormLabel>Status</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter status" {...field} />
+                    <Select onValueChange={field.onChange} value={field.value}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Status" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="task">Task</SelectItem>
+                        <SelectItem value="todo">Todo</SelectItem>
+                        <SelectItem value="doing">In Progress</SelectItem>
+                        <SelectItem value="done">Done</SelectItem>
+                      </SelectContent>
+                    </Select>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -112,11 +132,13 @@ export default function TodoForm({ refreshTodos }: TodoFormProps) {
 
             <Button type="submit" disabled={loading}>
               {loading && <Loader2 className="animate-spin mr-2" size={16} />}
-              {loading ? "Adding..." : "Add Task"}
+              {loading ? "Updating..." : "Update Task"}
             </Button>
           </form>
         </Form>
       </DialogContent>
     </Dialog>
   );
-}
+};
+
+export default UpdateTaskDialog;
