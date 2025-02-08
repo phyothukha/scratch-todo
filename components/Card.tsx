@@ -23,28 +23,28 @@ const CardItem = ({ cardItem, handleDragStart, deleteCard }: cardItemProp) => {
           draggable
           onDragStart={(e) => handleDragStart(e, cardItem.id)}
         >
-          <p className=" top-2 z-20 right-2 absolute">
+          <div className=" top-2 z-20 sright-2 absolute right-2">
             <Button
-              className=" cursor-pointer size-8 "
+              className=" cursor-pointer size-8"
               variant="destructive"
               size="icon"
               onClick={() => deleteCard(cardItem.id)}
             >
               <IconTrash className=" cursor-pointer" size={20} />
             </Button>
-          </p>
+          </div>
           <CardHeader className="flex pb-0 gap-3">
             <div className="flex flex-col">
               <p
                 className={`text-md  font-semibold  ${SelectColor.get(cardItem.status)} `}
               >
-                NextUI
+                Project Title
               </p>
-              <p className="text-[12px] text-default-500">nextui.org</p>
+              <p className="text-[12px] text-default-500">github.com</p>
             </div>
           </CardHeader>
           <CardContent className=" text-neutral-500 text-[12px]">
-            <p className=" mb-5">{cardItem?.title}</p>
+            <p className=" mb-3"> {cardItem.title}</p>
             <Image
               alt="nextui logo"
               width={100}

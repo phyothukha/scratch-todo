@@ -18,22 +18,10 @@ export default function Home() {
         <h4 className=" text-2xl font-bold">Drag&Drop</h4>
       </div>
       <div className=" grid md:grid-cols-2 grid-cols-1 max-h-screen  lg:grid-cols-4 gap-5 mt-5">
-        <div className=" col-span-1 border-s border-e px-5">
-          <Column
-            cards={cards}
-            column="task"
-            setCards={setCards}
-            title="TASK"
-          />
-        </div>
-        <div className=" col-span-1 border-s border-e px-5">
-          <Column
-            cards={cards}
-            column="todo"
-            setCards={setCards}
-            title="TODO"
-          />
-        </div>
+        <Column cards={cards} column="task" setCards={setCards} title="TASK" />
+
+        <Column cards={cards} column="todo" setCards={setCards} title="TODO" />
+
         <Column
           cards={cards}
           column="doing"

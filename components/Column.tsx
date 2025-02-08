@@ -99,7 +99,7 @@ const Column = ({ column, cards, setCards, title }: dataProp) => {
       const findCard = cards.find((c) => c.id === cardId);
 
       if (!findCard) return;
-      const updateCardStatus: CardProp = { ...findCard, status };
+      const updateCardStatus: CardProp = { ...findCard, status: column };
 
       if (!updateCardStatus) return;
 
