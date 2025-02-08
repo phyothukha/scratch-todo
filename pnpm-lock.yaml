@@ -7,9 +7,15 @@ settings:
 importers:
   .:
     dependencies:
+      "@hookform/resolvers":
+        specifier: ^3.10.0
+        version: 3.10.0(react-hook-form@7.54.2(react@19.0.0))
       "@prisma/client":
         specifier: ^6.3.1
         version: 6.3.1(prisma@6.3.1(typescript@5.7.3))(typescript@5.7.3)
+      "@radix-ui/react-label":
+        specifier: ^2.1.2
+        version: 2.1.2(@types/react-dom@19.0.3(@types/react@19.0.8))(@types/react@19.0.8)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       "@radix-ui/react-slot":
         specifier: ^1.1.2
         version: 1.1.2(@types/react@19.0.8)(react@19.0.0)
@@ -37,12 +43,15 @@ importers:
       react-dom:
         specifier: ^19.0.0
         version: 19.0.0(react@19.0.0)
+      react-hook-form:
+        specifier: ^7.54.2
+        version: 7.54.2(react@19.0.0)
       tailwind-merge:
         specifier: ^3.0.1
         version: 3.0.1
       tailwindcss-animate:
         specifier: ^1.0.7
-        version: 1.0.7(tailwindcss@3.4.17)
+        version: 1.0.7(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@20.17.17)(typescript@5.7.3)))
       zod:
         specifier: ^3.24.1
         version: 3.24.1
@@ -82,7 +91,10 @@ importers:
         version: 6.3.1(typescript@5.7.3)
       tailwindcss:
         specifier: ^3.4.1
-        version: 3.4.17
+        version: 3.4.17(ts-node@10.9.2(@types/node@20.17.17)(typescript@5.7.3))
+      ts-node:
+        specifier: ^10.9.2
+        version: 10.9.2(@types/node@20.17.17)(typescript@5.7.3)
       typescript:
         specifier: ^5
         version: 5.7.3
@@ -94,6 +106,13 @@ packages:
         integrity: sha512-UrcABB+4bUrFABwbluTIBErXwvbsU/V7TZWfmbgJfbkwiBuziS9gxdODUyuiecfdGQ85jglMW6juS3+z5TsKLw==,
       }
     engines: { node: ">=10" }
+
+  "@cspotcode/source-map-support@0.8.1":
+    resolution:
+      {
+        integrity: sha512-IchNf6dN4tHoMFIn/7OE8LWZ19Y6q/67Bmf6vnGREv8RSbBVb9LPJxEcnwrcwX6ixSvaiGoomAUvu4YSxXrVgw==,
+      }
+    engines: { node: ">=12" }
 
   "@emnapi/runtime@1.3.1":
     resolution:
@@ -165,6 +184,14 @@ packages:
         integrity: sha512-lB05FkqEdUg2AA0xEbUz0SnkXT1LcCTa438W4IWTUh4hdOnVbQyOJ81OrDXsJk/LSiJHubgGEFoR5EHq1NsH1A==,
       }
     engines: { node: ^18.18.0 || ^20.9.0 || >=21.1.0 }
+
+  "@hookform/resolvers@3.10.0":
+    resolution:
+      {
+        integrity: sha512-79Dv+3mDF7i+2ajj7SkypSKHhl1cbln1OGavqrsF7p6mbUv11xpqpacPsGDCTRvCSjEEIez2ef1NveSVL3b0Ag==,
+      }
+    peerDependencies:
+      react-hook-form: ^7.0.0
 
   "@humanfs/core@0.19.1":
     resolution:
@@ -403,6 +430,12 @@ packages:
         integrity: sha512-vNk6aEwybGtawWmy/PzwnGDOjCkLWSD2wqvjGGAgOAwCGWySYXfYoxt00IJkTF+8Lb57DwOb3Aa0o9CApepiYQ==,
       }
 
+  "@jridgewell/trace-mapping@0.3.9":
+    resolution:
+      {
+        integrity: sha512-3Belt6tdc8bPgAtbcmdtNJlirVoTmEb5e2gC94PnkwEW9jI6CAHUeoG85tjWP5WquqfavoMtMwiG4P926ZKKuQ==,
+      }
+
   "@next/env@15.1.6":
     resolution:
       {
@@ -579,6 +612,38 @@ packages:
       "@types/react":
         optional: true
 
+  "@radix-ui/react-label@2.1.2":
+    resolution:
+      {
+        integrity: sha512-zo1uGMTaNlHehDyFQcDZXRJhUPDuukcnHz0/jnrup0JA6qL+AFpAnty+7VKa9esuU5xTblAZzTGYJKSKaBxBhw==,
+      }
+    peerDependencies:
+      "@types/react": "*"
+      "@types/react-dom": "*"
+      react: ^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc
+      react-dom: ^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc
+    peerDependenciesMeta:
+      "@types/react":
+        optional: true
+      "@types/react-dom":
+        optional: true
+
+  "@radix-ui/react-primitive@2.0.2":
+    resolution:
+      {
+        integrity: sha512-Ec/0d38EIuvDF+GZjcMU/Ze6MxntVJYO/fRlCPhCaVUyPY9WTalHJw54tp9sXeJo3tlShWpy41vQRgLRGOuz+w==,
+      }
+    peerDependencies:
+      "@types/react": "*"
+      "@types/react-dom": "*"
+      react: ^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc
+      react-dom: ^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc
+    peerDependenciesMeta:
+      "@types/react":
+        optional: true
+      "@types/react-dom":
+        optional: true
+
   "@radix-ui/react-slot@1.1.2":
     resolution:
       {
@@ -627,6 +692,30 @@ packages:
     resolution:
       {
         integrity: sha512-c8OKLM48l00u9TFbh2qhSODMONIzML8ajtCyq95rW8vzkWcBrKRPM61tdkThz2j4kd5u17srPGIjqdeRUZdfdw==,
+      }
+
+  "@tsconfig/node10@1.0.11":
+    resolution:
+      {
+        integrity: sha512-DcRjDCujK/kCk/cUe8Xz8ZSpm8mS3mNNpta+jGCA6USEDfktlNvm1+IuZ9eTcDbNk41BHwpHHeW+N1lKCz4zOw==,
+      }
+
+  "@tsconfig/node12@1.0.11":
+    resolution:
+      {
+        integrity: sha512-cqefuRsh12pWyGsIoBKJA9luFu3mRxCA+ORZvA4ktLSzIuCUtWVxGIuXigEwO5/ywWFMZ2QEGKWvkZG1zDMTag==,
+      }
+
+  "@tsconfig/node14@1.0.3":
+    resolution:
+      {
+        integrity: sha512-ysT8mhdixWK6Hw3i1V2AeRqZ5WfXg1G43mqoYlM2nc6388Fq5jcXyr5mRsqViLx/GJYdoL0bfXD8nmF+Zn/Iow==,
+      }
+
+  "@tsconfig/node16@1.0.4":
+    resolution:
+      {
+        integrity: sha512-vxhUy4J8lyeyinH7Azl1pdd43GJhZH/tP2weN8TntQblOY+A0XbT8DJk1/oCPuOOyg/Ja757rG0CgHcWC8OfMA==,
       }
 
   "@types/estree@1.0.6":
@@ -746,6 +835,13 @@ packages:
     peerDependencies:
       acorn: ^6.0.0 || ^7.0.0 || ^8.0.0
 
+  acorn-walk@8.3.4:
+    resolution:
+      {
+        integrity: sha512-ueEepnujpqee2o5aIYnvHU6C0A42MNdsIDeqy5BydrkuC5R1ZuUFnm27EeFJGoEHJQgn3uleRvmTXaJgfXbt4g==,
+      }
+    engines: { node: ">=0.4.0" }
+
   acorn@8.14.0:
     resolution:
       {
@@ -807,6 +903,12 @@ packages:
         integrity: sha512-KMReFUr0B4t+D+OBkjR3KYqvocp2XaSzO55UcB6mgQMd3KbcE+mWTyvVV7D/zsdEbNnV6acZUutkiHQXvTr1Rw==,
       }
     engines: { node: ">= 8" }
+
+  arg@4.1.3:
+    resolution:
+      {
+        integrity: sha512-58S9QDqG0Xx27YwPSt9fJxivjYl432YCwfDMfZ+71RAqUrZef7LrKQZ3LHLOwCS4FLNBplP533Zx895SeOCHvA==,
+      }
 
   arg@5.0.2:
     resolution:
@@ -1103,6 +1205,12 @@ packages:
         integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==,
       }
 
+  create-require@1.1.1:
+    resolution:
+      {
+        integrity: sha512-dcKFX3jn0MpIaXjisoRvexIJVEKzaq7z2rZKxf+MSr9TkdmHmsU4m2lcLojrj/FHl8mk5VxMmYA+ftRkP/3oKQ==,
+      }
+
   cross-spawn@7.0.6:
     resolution:
       {
@@ -1206,6 +1314,13 @@ packages:
       {
         integrity: sha512-gxtyfqMg7GKyhQmb056K7M3xszy/myH8w+B4RT+QXBQsvAOdc3XymqDDPHx1BgPgsdAA5SIifona89YtRATDzw==,
       }
+
+  diff@4.0.2:
+    resolution:
+      {
+        integrity: sha512-58lmxKSA4BNyLz+HHMUzlOEpg09FV+ev6ZMe3vJihgdxzgcwZ8VoEEPmALCZG9LmqfVoNMMKpttIYTVG6uDY7A==,
+      }
+    engines: { node: ">=0.3.1" }
 
   dlv@1.1.3:
     resolution:
@@ -2210,6 +2325,12 @@ packages:
     peerDependencies:
       react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0
 
+  make-error@1.3.6:
+    resolution:
+      {
+        integrity: sha512-s8UhlNe7vPKomQhC1qFelMokr/Sc3AgNbso3n74mVPA5LTZwkB9NlXf4XPamLxJE8h0gh73rM94xvwRT2CVInw==,
+      }
+
   math-intrinsics@1.1.0:
     resolution:
       {
@@ -2671,6 +2792,15 @@ packages:
     peerDependencies:
       react: ^19.0.0
 
+  react-hook-form@7.54.2:
+    resolution:
+      {
+        integrity: sha512-eHpAUgUjWbZocoQYUHposymRb4ZP6d0uwUnooL2uOybA9/3tPUvoAKqEWK1WaSiTxxOfTpffNZP7QwlnM3/gEg==,
+      }
+    engines: { node: ">=18.0.0" }
+    peerDependencies:
+      react: ^16.8.0 || ^17 || ^18 || ^19
+
   react-is@16.13.1:
     resolution:
       {
@@ -3130,6 +3260,23 @@ packages:
         integrity: sha512-Y/arvbn+rrz3JCKl9C4kVNfTfSm2/mEp5FSz5EsZSANGPSlQrpRI5M4PKF+mJnE52jOO90PnPSc3Ur3bTQw0gA==,
       }
 
+  ts-node@10.9.2:
+    resolution:
+      {
+        integrity: sha512-f0FFpIdcHgn8zcPSbf1dRevwt047YMnaiJM3u2w2RewrB+fob/zePZcrOyQoLMMO7aBIddLcQIEK5dYjkLnGrQ==,
+      }
+    hasBin: true
+    peerDependencies:
+      "@swc/core": ">=1.2.50"
+      "@swc/wasm": ">=1.2.50"
+      "@types/node": "*"
+      typescript: ">=2.7"
+    peerDependenciesMeta:
+      "@swc/core":
+        optional: true
+      "@swc/wasm":
+        optional: true
+
   tsconfig-paths@3.15.0:
     resolution:
       {
@@ -3210,6 +3357,12 @@ packages:
         integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==,
       }
 
+  v8-compile-cache-lib@3.0.1:
+    resolution:
+      {
+        integrity: sha512-wa7YjyUGfNZngI/vtK0UHAN+lgDCxBPCylVXGp0zu59Fz5aiGtNXaq3DhIov063MorB+VfufLh3JlF2KdTK3xg==,
+      }
+
   which-boxed-primitive@1.1.1:
     resolution:
       {
@@ -3282,6 +3435,13 @@ packages:
     engines: { node: ">= 14" }
     hasBin: true
 
+  yn@3.1.1:
+    resolution:
+      {
+        integrity: sha512-Ux4ygGWsu2c7isFWe8Yu1YluJmqVhxqK2cLXNQA5AcC3QfbGNpM7fu0Y8b/z16pXLnFxZYvWhd3fhBY9DLmC6Q==,
+      }
+    engines: { node: ">=6" }
+
   yocto-queue@0.1.0:
     resolution:
       {
@@ -3297,6 +3457,10 @@ packages:
 
 snapshots:
   "@alloc/quick-lru@5.2.0": {}
+
+  "@cspotcode/source-map-support@0.8.1":
+    dependencies:
+      "@jridgewell/trace-mapping": 0.3.9
 
   "@emnapi/runtime@1.3.1":
     dependencies:
@@ -3348,6 +3512,10 @@ snapshots:
     dependencies:
       "@eslint/core": 0.10.0
       levn: 0.4.1
+
+  "@hookform/resolvers@3.10.0(react-hook-form@7.54.2(react@19.0.0))":
+    dependencies:
+      react-hook-form: 7.54.2(react@19.0.0)
 
   "@humanfs/core@0.19.1": {}
 
@@ -3463,6 +3631,11 @@ snapshots:
       "@jridgewell/resolve-uri": 3.1.2
       "@jridgewell/sourcemap-codec": 1.5.0
 
+  "@jridgewell/trace-mapping@0.3.9":
+    dependencies:
+      "@jridgewell/resolve-uri": 3.1.2
+      "@jridgewell/sourcemap-codec": 1.5.0
+
   "@next/env@15.1.6": {}
 
   "@next/eslint-plugin-next@15.1.6":
@@ -3543,6 +3716,24 @@ snapshots:
     optionalDependencies:
       "@types/react": 19.0.8
 
+  "@radix-ui/react-label@2.1.2(@types/react-dom@19.0.3(@types/react@19.0.8))(@types/react@19.0.8)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)":
+    dependencies:
+      "@radix-ui/react-primitive": 2.0.2(@types/react-dom@19.0.3(@types/react@19.0.8))(@types/react@19.0.8)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      react: 19.0.0
+      react-dom: 19.0.0(react@19.0.0)
+    optionalDependencies:
+      "@types/react": 19.0.8
+      "@types/react-dom": 19.0.3(@types/react@19.0.8)
+
+  "@radix-ui/react-primitive@2.0.2(@types/react-dom@19.0.3(@types/react@19.0.8))(@types/react@19.0.8)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)":
+    dependencies:
+      "@radix-ui/react-slot": 1.1.2(@types/react@19.0.8)(react@19.0.0)
+      react: 19.0.0
+      react-dom: 19.0.0(react@19.0.0)
+    optionalDependencies:
+      "@types/react": 19.0.8
+      "@types/react-dom": 19.0.3(@types/react@19.0.8)
+
   "@radix-ui/react-slot@1.1.2(@types/react@19.0.8)(react@19.0.0)":
     dependencies:
       "@radix-ui/react-compose-refs": 1.1.1(@types/react@19.0.8)(react@19.0.0)
@@ -3566,6 +3757,14 @@ snapshots:
       react: 19.0.0
 
   "@tabler/icons@3.30.0": {}
+
+  "@tsconfig/node10@1.0.11": {}
+
+  "@tsconfig/node12@1.0.11": {}
+
+  "@tsconfig/node14@1.0.3": {}
+
+  "@tsconfig/node16@1.0.4": {}
 
   "@types/estree@1.0.6": {}
 
@@ -3666,6 +3865,10 @@ snapshots:
     dependencies:
       acorn: 8.14.0
 
+  acorn-walk@8.3.4:
+    dependencies:
+      acorn: 8.14.0
+
   acorn@8.14.0: {}
 
   ajv@6.12.6:
@@ -3695,6 +3898,8 @@ snapshots:
     dependencies:
       normalize-path: 3.0.0
       picomatch: 2.3.1
+
+  arg@4.1.3: {}
 
   arg@5.0.2: {}
 
@@ -3884,6 +4089,8 @@ snapshots:
 
   concat-map@0.0.1: {}
 
+  create-require@1.1.1: {}
+
   cross-spawn@7.0.6:
     dependencies:
       path-key: 3.1.1
@@ -3940,6 +4147,8 @@ snapshots:
     optional: true
 
   didyoumean@1.2.2: {}
+
+  diff@4.0.2: {}
 
   dlv@1.1.3: {}
 
@@ -4699,6 +4908,8 @@ snapshots:
     dependencies:
       react: 19.0.0
 
+  make-error@1.3.6: {}
+
   math-intrinsics@1.1.0: {}
 
   merge-stream@2.0.0: {}
@@ -4892,12 +5103,13 @@ snapshots:
       camelcase-css: 2.0.1
       postcss: 8.5.1
 
-  postcss-load-config@4.0.2(postcss@8.5.1):
+  postcss-load-config@4.0.2(postcss@8.5.1)(ts-node@10.9.2(@types/node@20.17.17)(typescript@5.7.3)):
     dependencies:
       lilconfig: 3.1.3
       yaml: 2.7.0
     optionalDependencies:
       postcss: 8.5.1
+      ts-node: 10.9.2(@types/node@20.17.17)(typescript@5.7.3)
 
   postcss-nested@6.2.0(postcss@8.5.1):
     dependencies:
@@ -4948,6 +5160,10 @@ snapshots:
     dependencies:
       react: 19.0.0
       scheduler: 0.25.0
+
+  react-hook-form@7.54.2(react@19.0.0):
+    dependencies:
+      react: 19.0.0
 
   react-is@16.13.1: {}
 
@@ -5248,11 +5464,11 @@ snapshots:
 
   tailwind-merge@3.0.1: {}
 
-  tailwindcss-animate@1.0.7(tailwindcss@3.4.17):
+  tailwindcss-animate@1.0.7(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@20.17.17)(typescript@5.7.3))):
     dependencies:
-      tailwindcss: 3.4.17
+      tailwindcss: 3.4.17(ts-node@10.9.2(@types/node@20.17.17)(typescript@5.7.3))
 
-  tailwindcss@3.4.17:
+  tailwindcss@3.4.17(ts-node@10.9.2(@types/node@20.17.17)(typescript@5.7.3)):
     dependencies:
       "@alloc/quick-lru": 5.2.0
       arg: 5.0.2
@@ -5271,7 +5487,7 @@ snapshots:
       postcss: 8.5.1
       postcss-import: 15.1.0(postcss@8.5.1)
       postcss-js: 4.0.1(postcss@8.5.1)
-      postcss-load-config: 4.0.2(postcss@8.5.1)
+      postcss-load-config: 4.0.2(postcss@8.5.1)(ts-node@10.9.2(@types/node@20.17.17)(typescript@5.7.3))
       postcss-nested: 6.2.0(postcss@8.5.1)
       postcss-selector-parser: 6.1.2
       resolve: 1.22.10
@@ -5298,6 +5514,24 @@ snapshots:
       typescript: 5.7.3
 
   ts-interface-checker@0.1.13: {}
+
+  ts-node@10.9.2(@types/node@20.17.17)(typescript@5.7.3):
+    dependencies:
+      "@cspotcode/source-map-support": 0.8.1
+      "@tsconfig/node10": 1.0.11
+      "@tsconfig/node12": 1.0.11
+      "@tsconfig/node14": 1.0.3
+      "@tsconfig/node16": 1.0.4
+      "@types/node": 20.17.17
+      acorn: 8.14.0
+      acorn-walk: 8.3.4
+      arg: 4.1.3
+      create-require: 1.1.1
+      diff: 4.0.2
+      make-error: 1.3.6
+      typescript: 5.7.3
+      v8-compile-cache-lib: 3.0.1
+      yn: 3.1.1
 
   tsconfig-paths@3.15.0:
     dependencies:
@@ -5361,6 +5595,8 @@ snapshots:
       punycode: 2.3.1
 
   util-deprecate@1.0.2: {}
+
+  v8-compile-cache-lib@3.0.1: {}
 
   which-boxed-primitive@1.1.1:
     dependencies:
@@ -5427,6 +5663,8 @@ snapshots:
       strip-ansi: 7.1.0
 
   yaml@2.7.0: {}
+
+  yn@3.1.1: {}
 
   yocto-queue@0.1.0: {}
 

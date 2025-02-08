@@ -12,3 +12,10 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
+
+
+model Task {
+  id      String @id @default(cuid())
+  title   String
+  status String
+}
