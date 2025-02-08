@@ -6,7 +6,7 @@ const prisma = new PrismaClient();
 
 const taskSchema = z.object({
   title: z.string().min(1),
-  status: z.string(),
+  status: z.enum(["task", "doing", "done", "todo"]),
 });
 
 //===== Handle GET request - Fetch all tasks =====//
