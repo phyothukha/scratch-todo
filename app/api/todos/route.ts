@@ -1,8 +1,7 @@
+import { prisma } from "@/lib/db";
 import { NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
-import { z } from "zod";
 
-const prisma = new PrismaClient();
+import { z } from "zod";
 
 const taskSchema = z.object({
   title: z.string().min(1),
