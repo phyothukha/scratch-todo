@@ -17,6 +17,7 @@ export const metadata: Metadata = {
   title: "Scratch todolist",
   description:
     "A TODO list is a simple, interactive tool used to organize tasks or activities. It typically allows users to add, view, and mark tasks as completed. Key features often include a list of tasks, a user interface for adding new tasks, and the ability to mark tasks as completed or incomplete.",
+  icons: "/favicon.png",
 };
 
 export default function RootLayout({
