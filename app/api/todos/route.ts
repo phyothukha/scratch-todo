@@ -47,7 +47,6 @@ export async function POST(req: Request) {
 export async function PATCH(req: Request) {
   try {
     const body = await req.json();
-    console.log(body);
     const { id, ...updates } = body;
 
     if (!id) {
