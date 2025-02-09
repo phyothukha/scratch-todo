@@ -4,7 +4,7 @@ import { toast } from "@/hooks/use-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { FC, useState } from "react";
+import { useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -32,6 +32,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
+import { addTask, fetchTasks } from "@/lib/api"; // ✅ Import API function
+import { useTodoStore } from "@/hooks/useTodoStore";
 
 const formSchema = z.object({
   title: z.string().min(1, "Title is required"),
@@ -43,34 +45,25 @@ const formSchema = z.object({
   }),
 });
 
-interface TodoFormProps {
-  refreshTodos: () => void;
-}
-
-const AddTaskDialog: FC<TodoFormProps> = ({ refreshTodos }) => {
+const AddTaskDialog = () => {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const { setCards } = useTodoStore();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: { title: "", status: "task" },
   });
 
-  const onSubmit = async (data: z.infer<typeof formSchema>) => {
+  const onSubmit = async (value: z.infer<typeof formSchema>) => {
     setLoading(true);
-
-    const response = await fetch("/api/todos", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    });
-
+    const success = await addTask(value);
     setLoading(false);
 
-    if (response.ok) {
+    if (success) {
       form.reset();
       toast({ description: "Task added successfully!" });
-      refreshTodos();
+      fetchTasks().then((res) => setCards(res));
       setOpen(false);
     } else {
       toast({ description: "Failed to add task!", variant: "destructive" });

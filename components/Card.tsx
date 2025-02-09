@@ -7,6 +7,7 @@ import { Card, CardContent, CardHeader } from "./ui/card";
 import { CardProp } from "@/app/page";
 import UpdateTaskDialog from "./UpdateTaskDialog";
 import { cn } from "@/lib/utils";
+import { Badge } from "./ui/badge";
 
 interface cardItemProp {
   cardItem: CardProp;
@@ -37,17 +38,19 @@ const CardItem = ({ cardItem, handleDragStart, deleteCard }: cardItemProp) => {
           </div>
           <CardHeader className="flex pb-0 gap-3">
             <h3>{cardItem.title.substring(0, 20)}...</h3>
-            <p
-              className={cn(
-                "text-[12px] text-default-500",
-                SelectColor.get(cardItem.status),
-              )}
-            >
-              {SelectText.get(cardItem.status)}
-            </p>
           </CardHeader>
-          <CardContent className=" text-neutral-500 text-[12px]">
-            <p className=" mb-3"> {cardItem.title}</p>
+          <CardContent className=" text-neutral-500 text-[12px] my-3">
+            <div>
+              <Badge
+                variant="outline"
+                className={cn(
+                  "text-[12px] text-default-500",
+                  SelectColor.get(cardItem.status),
+                )}
+              >
+                {SelectText.get(cardItem.status)}
+              </Badge>
+            </div>
           </CardContent>
         </Card>
       </motion.div>

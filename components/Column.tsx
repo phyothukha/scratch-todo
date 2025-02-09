@@ -1,25 +1,26 @@
-import { Dispatch, DragEvent, SetStateAction } from "react";
+import { DragEvent } from "react";
 import CardItem from "./Card";
 import DropZone from "./DropZone";
-
 import { Badge } from "./ui/badge";
 import { CardProp } from "@/app/page";
 import { cn } from "@/lib/utils";
+import { deleteTask, fetchTasks, updateTaskStatus } from "@/lib/api";
+import { useTodoStore } from "@/hooks/useTodoStore";
 
 interface dataProp {
   column: string;
-  cards: CardProp[];
-  setCards: Dispatch<SetStateAction<CardProp[]>>;
   title: string;
 }
 
-const Column = ({ column, cards, setCards, title }: dataProp) => {
+const Column = ({ column, title }: dataProp) => {
+  const { cards, setCards } = useTodoStore();
   const filterCard = cards?.filter((c) => c.status === column);
 
   const getAllIndicators = (): HTMLDivElement[] => {
     return Array.from(document.querySelectorAll(`[data-column=${column}]`));
   };
 
+  //===== Function to get the nearest drop zone =====//
   const getNearestIndicators = (
     e: DragEvent<HTMLDivElement>,
     indicators: HTMLDivElement[],
@@ -47,6 +48,7 @@ const Column = ({ column, cards, setCards, title }: dataProp) => {
     return el;
   };
 
+  //===== Function to highlight the drop zone =====//
   const dropZoneActive = (e: DragEvent<HTMLDivElement>) => {
     const indicators = getAllIndicators();
 
@@ -56,6 +58,7 @@ const Column = ({ column, cards, setCards, title }: dataProp) => {
     el?.element.classList.add("bg-cyan-100");
   };
 
+  //===== Function to clear the drop zone =====//
   const clearHighlights = (
     e: DragEvent<HTMLDivElement>,
     els?: HTMLDivElement[],
@@ -86,6 +89,7 @@ const Column = ({ column, cards, setCards, title }: dataProp) => {
     clearHighlights(e);
   };
 
+  //===== Function to update the task's status in the database =====//
   const handleDrop = async (e: DragEvent<HTMLDivElement>) => {
     const cardId = e.dataTransfer.getData("cardId");
     const indicators = getAllIndicators();
@@ -115,53 +119,16 @@ const Column = ({ column, cards, setCards, title }: dataProp) => {
       }
 
       setCards(newCard);
-
-      // Update the status in the database
-      await updateCardStatusInDatabase(updateCardStatus);
+      updateTaskStatus(updateCardStatus);
     }
   };
 
-  // Function to update the card's status in the database
-  const updateCardStatusInDatabase = async (card: CardProp) => {
-    try {
-      const response = await fetch("/api/todos", {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ ...card, status: card.status }),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to update the card status");
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
+  //===== Function to delete the card from the database =====//
   const deleteCard = async (id: string) => {
-    await deleteCardFromDatabase(id);
-    setCards((pre) => pre?.filter((card) => card.id !== id));
-  };
-
-  // Function to delete the card from the database
-  const deleteCardFromDatabase = async (id: string) => {
-    try {
-      const response = await fetch("/api/delete-card", {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ id }),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to delete the card");
-      }
-    } catch (error) {
-      console.error(error);
-    }
+    const filterCard = cards.filter((card) => card.id !== id);
+    setCards(filterCard);
+    await deleteTask(id);
+    await fetchTasks();
   };
 
   return (

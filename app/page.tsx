@@ -1,7 +1,9 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import Column from "@/components/Column";
 import TodoForm from "@/components/AddTaskDialoag";
+import { useTodoStore } from "@/hooks/useTodoStore";
+import { fetchTasks } from "@/lib/api";
 
 export interface CardProp {
   title: string;
@@ -10,40 +12,24 @@ export interface CardProp {
 }
 
 export default function Home() {
-  const [cards, setCards] = useState<CardProp[]>([]);
+  const { setCards } = useTodoStore();
 
   //===== All Column data fetching =====//
-  const fetchTodos = async () => {
-    const response = await fetch("/api/todos", { cache: "no-store" });
-    const data = await response.json();
-    setCards(data);
-  };
-
   useEffect(() => {
-    fetchTodos();
-  }, []);
+    fetchTasks().then((res) => setCards(res));
+  }, [setCards]);
 
   return (
     <section className="px-12 mt-4">
       <div className="flex items-center justify-between">
         <h4 className="text-2xl font-bold">Drag&Drop</h4>
-        <TodoForm refreshTodos={fetchTodos} />
+        <TodoForm />
       </div>
       <div className="grid md:grid-cols-2 grid-cols-1 max-h-screen lg:grid-cols-4 gap-5 mt-5">
-        <Column cards={cards} column="task" setCards={setCards} title="TASK" />
-        <Column cards={cards} column="todo" setCards={setCards} title="TODO" />
-        <Column
-          cards={cards}
-          column="doing"
-          setCards={setCards}
-          title="IN PROGRESS"
-        />
-        <Column
-          cards={cards}
-          column="done"
-          setCards={setCards}
-          title="Finished"
-        />
+        <Column column="task" title="TASK" />
+        <Column column="todo" title="TODO" />
+        <Column column="doing" title="IN PROGRESS" />
+        <Column column="done" title="Finished" />
       </div>
     </section>
   );

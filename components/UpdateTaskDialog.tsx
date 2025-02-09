@@ -33,6 +33,8 @@ import {
   FormMessage,
 } from "./ui/form";
 import { CardProp } from "@/app/page";
+import { fetchTasks, updateTaskStatus } from "@/lib/api";
+import { useTodoStore } from "@/hooks/useTodoStore";
 
 const formSchema = z.object({
   title: z.string().min(1, "Title is required"),
@@ -46,6 +48,7 @@ interface UpdateTaskDialogProps {
 const UpdateTaskDialog: FC<UpdateTaskDialogProps> = ({ cardItem }) => {
   const [open, setopen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const { setCards } = useTodoStore();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -57,19 +60,14 @@ const UpdateTaskDialog: FC<UpdateTaskDialogProps> = ({ cardItem }) => {
 
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     setLoading(true);
-
-    const response = await fetch("/api/todos", {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id: cardItem.id, ...data }),
-    });
+    const success = await updateTaskStatus({ id: cardItem.id, ...data });
 
     setLoading(false);
 
-    if (response.ok) {
+    if (success) {
       form.reset();
       toast({ description: "Task updated successfully!" });
-      window.location.reload();
+      fetchTasks().then((res) => setCards(res));
       setopen(false);
     } else {
       toast({ description: "Failed to add task!", variant: "destructive" });
