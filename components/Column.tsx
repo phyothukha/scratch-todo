@@ -6,13 +6,15 @@ import { CardProp } from "@/app/page";
 import { cn } from "@/lib/utils";
 import { deleteTask, fetchTasks, updateTaskStatus } from "@/lib/api";
 import { useTodoStore } from "@/hooks/useTodoStore";
+import { Card, CardContent, CardHeader } from "./ui/card";
 
 interface dataProp {
   column: string;
   title: string;
+  isLoading: boolean;
 }
 
-const Column = ({ column, title }: dataProp) => {
+const Column = ({ column, isLoading, title }: dataProp) => {
   const { cards, setCards } = useTodoStore();
   const filterCard = cards?.filter((c) => c.status === column);
 
@@ -145,14 +147,29 @@ const Column = ({ column, title }: dataProp) => {
         onDragOver={handleDragOver}
         onDrop={handleDrop}
       >
-        {filterCard.map((cardItem) => (
-          <CardItem
-            key={cardItem.id}
-            cardItem={cardItem}
-            deleteCard={deleteCard}
-            handleDragStart={handleDragStart}
-          />
-        ))}
+        {isLoading
+          ? Array.from({ length: 5 }).map((_, index) => (
+              <Card
+                key={index}
+                className="w-full animate-pulse bg-gray-200 rounded-md"
+              >
+                <CardHeader>
+                  <div className="h-4 bg-gray-300 rounded-md w-3/4 mb-2"></div>
+                </CardHeader>
+                <CardContent>
+                  <div className="h-3 bg-gray-300 rounded-md w-1/2"></div>
+                </CardContent>
+              </Card>
+            ))
+          : filterCard.map((cardItem) => (
+              <CardItem
+                key={cardItem.id}
+                cardItem={cardItem}
+                deleteCard={deleteCard}
+                handleDragStart={handleDragStart}
+              />
+            ))}
+        {/* {} */}
         <DropZone beforeId={null} column={column} />
       </div>
     </div>

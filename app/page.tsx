@@ -1,5 +1,5 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Column from "@/components/Column";
 import TodoForm from "@/components/AddTaskDialoag";
 import { useTodoStore } from "@/hooks/useTodoStore";
@@ -13,10 +13,20 @@ export interface CardProp {
 
 export default function Home() {
   const { setCards } = useTodoStore();
+  const [isLoading, setIsLoading] = useState(false);
 
   //===== All Column data fetching =====//
   useEffect(() => {
-    fetchTasks().then((res) => setCards(res));
+    setIsLoading(true);
+    fetchTasks()
+      .then((res) => {
+        setIsLoading(false);
+        setCards(res);
+      })
+      .catch((error) => {
+        setIsLoading(true);
+        console.error(error);
+      });
   }, [setCards]);
 
   return (
@@ -26,10 +36,10 @@ export default function Home() {
         <TodoForm />
       </div>
       <div className="grid md:grid-cols-2 grid-cols-1 max-h-screen lg:grid-cols-4 gap-5 mt-5">
-        <Column column="task" title="TASK" />
-        <Column column="todo" title="TODO" />
-        <Column column="doing" title="IN PROGRESS" />
-        <Column column="done" title="Finished" />
+        <Column isLoading={isLoading} column="task" title="TASK" />
+        <Column isLoading={isLoading} column="todo" title="TODO" />
+        <Column isLoading={isLoading} column="doing" title="IN PROGRESS" />
+        <Column isLoading={isLoading} column="done" title="Finished" />
       </div>
     </section>
   );
