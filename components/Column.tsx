@@ -128,13 +128,15 @@ const Column = ({ column, isLoading, title }: dataProp) => {
   return (
     <>
       <div className=" pb-2 flex items-center justify-between">
-        <Badge className={cn(SelectColor.get(column) || "")}>
+        <Badge
+          className={cn(SelectColor.get(column) || "", "pointer-events-none")}
+        >
           {title}({filterCard.length})
         </Badge>
       </div>
 
       <div
-        className=" h-full space-y-3 "
+        className=" h-full min-h-[80vh] space-y-3 "
         onDragLeave={handleDragLeave}
         onDragOver={handleDragOver}
         onDrop={handleDrop}
@@ -143,7 +145,7 @@ const Column = ({ column, isLoading, title }: dataProp) => {
           ? Array.from({ length: 5 }).map((_, index) => (
               <Card
                 key={index}
-                className="w-full animate-pulse my-10 bg-gray-100 rounded-md"
+                className="w-full animate-pulse bg-gray-100 rounded-md"
               >
                 <CardHeader>
                   <div className="h-4 bg-gray-200 rounded-md w-3/4 mb-2"></div>
@@ -169,8 +171,8 @@ const Column = ({ column, isLoading, title }: dataProp) => {
 export default Column;
 
 const SelectColor = new Map<string, string>([
-  ["task", "bg-blue-400"],
-  ["todo", "bg-green-400"],
-  ["doing", "bg-yellow-400"],
-  ["done", "bg-purple-400"],
+  ["task", "bg-blue-600"],
+  ["todo", "bg-green-600"],
+  ["doing", "bg-yellow-600"],
+  ["done", "bg-purple-600"],
 ]);

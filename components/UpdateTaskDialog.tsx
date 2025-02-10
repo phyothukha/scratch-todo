@@ -72,7 +72,7 @@ const UpdateTaskDialog: FC<UpdateTaskDialogProps> = ({ cardItem, setopen }) => {
   };
 
   return (
-    <DialogContent>
+    <DialogContent className=" bg-cyan-50">
       <DialogHeader>
         <DialogTitle>Update task</DialogTitle>
         <DialogDescription>
@@ -88,7 +88,11 @@ const UpdateTaskDialog: FC<UpdateTaskDialogProps> = ({ cardItem, setopen }) => {
               <FormItem>
                 <FormLabel>Title</FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter title" {...field} />
+                  <Input
+                    className=" h-12 rounded-md focus-visible:ring-0 "
+                    placeholder="Enter title"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -103,7 +107,7 @@ const UpdateTaskDialog: FC<UpdateTaskDialogProps> = ({ cardItem, setopen }) => {
                 <FormLabel>Status</FormLabel>
                 <FormControl>
                   <Select onValueChange={field.onChange} value={field.value}>
-                    <SelectTrigger>
+                    <SelectTrigger className=" h-12  rounded-md focus-visible:ring-0">
                       <SelectValue placeholder="Status" />
                     </SelectTrigger>
                     <SelectContent>
@@ -119,10 +123,16 @@ const UpdateTaskDialog: FC<UpdateTaskDialogProps> = ({ cardItem, setopen }) => {
             )}
           />
 
-          <Button type="submit" disabled={loading}>
-            {loading && <Loader2 className="animate-spin mr-2" size={16} />}
-            {loading ? "Updating..." : "Update Task"}
-          </Button>
+          <div className=" flex justify-end">
+            <Button
+              type="submit"
+              disabled={loading}
+              className=" bg-green-500 hover:bg-green-600"
+            >
+              {loading && <Loader2 className="animate-spin mr-2" size={16} />}
+              {loading ? "Updating..." : "Update Task"}
+            </Button>
+          </div>
         </form>
       </Form>
     </DialogContent>

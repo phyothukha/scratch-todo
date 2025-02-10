@@ -32,7 +32,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
-import { addTask, fetchTasks } from "@/lib/api"; // ✅ Import API function
+import { addTask, fetchTasks } from "@/lib/api";
 import { useTodoStore } from "@/hooks/useTodoStore";
 
 const formSchema = z.object({
@@ -73,12 +73,12 @@ const AddTaskDialog = () => {
   return (
     <Dialog onOpenChange={setOpen} open={open}>
       <DialogTrigger asChild>
-        <Button className=" bg-blue-600">
+        <Button className=" bg-blue-500 hover:bg-blue-600">
           <IconPlus />
           Add Task
         </Button>
       </DialogTrigger>
-      <DialogContent>
+      <DialogContent className=" bg-blue-50">
         <DialogHeader>
           <DialogTitle>Add task</DialogTitle>
           <DialogDescription>
@@ -94,7 +94,11 @@ const AddTaskDialog = () => {
                 <FormItem>
                   <FormLabel>Title</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter title" {...field} />
+                    <Input
+                      className=" h-12 rounded-md focus-visible:ring-0 "
+                      placeholder="Enter title"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -109,7 +113,7 @@ const AddTaskDialog = () => {
                   <FormLabel>Status</FormLabel>
                   <FormControl>
                     <Select onValueChange={field.onChange} value={field.value}>
-                      <SelectTrigger>
+                      <SelectTrigger className=" h-12  rounded-md focus-visible:ring-0">
                         <SelectValue placeholder="Status" />
                       </SelectTrigger>
                       <SelectContent>
@@ -125,10 +129,16 @@ const AddTaskDialog = () => {
               )}
             />
 
-            <Button type="submit" disabled={loading}>
-              {loading && <Loader2 className="animate-spin mr-2" size={16} />}
-              {loading ? "Adding..." : "Add Task"}
-            </Button>
+            <div className=" flex justify-end">
+              <Button
+                type="submit"
+                disabled={loading}
+                className=" bg-blue-500 hover:bg-blue-600"
+              >
+                {loading && <Loader2 className="animate-spin mr-2" size={16} />}
+                {loading ? "Adding..." : "Add Task"}
+              </Button>
+            </div>
           </form>
         </Form>
       </DialogContent>
