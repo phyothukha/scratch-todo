@@ -73,7 +73,7 @@ const AddTaskDialog = () => {
   return (
     <Dialog onOpenChange={setOpen} open={open}>
       <DialogTrigger asChild>
-        <Button variant="outline">
+        <Button className=" bg-blue-600">
           <IconPlus />
           Add Task
         </Button>

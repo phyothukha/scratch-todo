@@ -4,18 +4,15 @@ import { toast } from "@/hooks/use-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { FC, useState } from "react";
+import { Dispatch, FC, SetStateAction, useState } from "react";
 import {
-  Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "./ui/dialog";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
-import { IconEdit } from "@tabler/icons-react";
 import {
   Select,
   SelectContent,
@@ -43,10 +40,10 @@ const formSchema = z.object({
 
 interface UpdateTaskDialogProps {
   cardItem: CardProp;
+  setopen: Dispatch<SetStateAction<boolean>>;
 }
 
-const UpdateTaskDialog: FC<UpdateTaskDialogProps> = ({ cardItem }) => {
-  const [open, setopen] = useState(false);
+const UpdateTaskDialog: FC<UpdateTaskDialogProps> = ({ cardItem, setopen }) => {
   const [loading, setLoading] = useState(false);
   const { setCards } = useTodoStore();
 
@@ -75,67 +72,60 @@ const UpdateTaskDialog: FC<UpdateTaskDialogProps> = ({ cardItem }) => {
   };
 
   return (
-    <Dialog onOpenChange={setopen} open={open}>
-      <DialogTrigger asChild>
-        <Button variant="outline" size="icon" className=" bg-white">
-          <IconEdit className=" stroke-green-400" />
-        </Button>
-      </DialogTrigger>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Update task</DialogTitle>
-          <DialogDescription>
-            Enter task details and click submit.
-          </DialogDescription>
-        </DialogHeader>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            <FormField
-              control={form.control}
-              name="title"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Title</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Enter title" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+    <DialogContent>
+      <DialogHeader>
+        <DialogTitle>Update task</DialogTitle>
+        <DialogDescription>
+          Enter task details and click submit.
+        </DialogDescription>
+      </DialogHeader>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+          <FormField
+            control={form.control}
+            name="title"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Title</FormLabel>
+                <FormControl>
+                  <Input placeholder="Enter title" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-            <FormField
-              control={form.control}
-              name="status"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Status</FormLabel>
-                  <FormControl>
-                    <Select onValueChange={field.onChange} value={field.value}>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Status" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="task">Task</SelectItem>
-                        <SelectItem value="todo">Todo</SelectItem>
-                        <SelectItem value="doing">In Progress</SelectItem>
-                        <SelectItem value="done">Done</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+          <FormField
+            control={form.control}
+            name="status"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Status</FormLabel>
+                <FormControl>
+                  <Select onValueChange={field.onChange} value={field.value}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Status" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="task">Task</SelectItem>
+                      <SelectItem value="todo">Todo</SelectItem>
+                      <SelectItem value="doing">In Progress</SelectItem>
+                      <SelectItem value="done">Done</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-            <Button type="submit" disabled={loading}>
-              {loading && <Loader2 className="animate-spin mr-2" size={16} />}
-              {loading ? "Updating..." : "Update Task"}
-            </Button>
-          </form>
-        </Form>
-      </DialogContent>
-    </Dialog>
+          <Button type="submit" disabled={loading}>
+            {loading && <Loader2 className="animate-spin mr-2" size={16} />}
+            {loading ? "Updating..." : "Update Task"}
+          </Button>
+        </form>
+      </Form>
+    </DialogContent>
   );
 };
 

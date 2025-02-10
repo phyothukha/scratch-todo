@@ -1,10 +1,10 @@
 import { DragEvent } from "react";
-import CardItem from "./Card";
+import CardItem from "./CardItem";
 import DropZone from "./DropZone";
 import { Badge } from "./ui/badge";
 import { CardProp } from "@/app/page";
 import { cn } from "@/lib/utils";
-import { deleteTask, fetchTasks, updateTaskStatus } from "@/lib/api";
+import { updateTaskStatus } from "@/lib/api";
 import { useTodoStore } from "@/hooks/useTodoStore";
 import { Card, CardContent, CardHeader } from "./ui/card";
 
@@ -125,24 +125,16 @@ const Column = ({ column, isLoading, title }: dataProp) => {
     }
   };
 
-  //===== Function to delete the card from the database =====//
-  const deleteCard = async (id: string) => {
-    const filterCard = cards.filter((card) => card.id !== id);
-    setCards(filterCard);
-    await deleteTask(id);
-    await fetchTasks();
-  };
-
   return (
-    <div className="">
-      <div className=" border-b-2 pb-2 flex items-center justify-between">
-        <h5 className=" text-neutral-700 text-left font-bold">{title}</h5>
+    <>
+      <div className=" pb-2 flex items-center justify-between">
         <Badge className={cn(SelectColor.get(column) || "")}>
-          {filterCard.length}
+          {title}({filterCard.length})
         </Badge>
       </div>
+
       <div
-        className=" h-full  pt-5 space-y-3"
+        className=" h-full space-y-3 "
         onDragLeave={handleDragLeave}
         onDragOver={handleDragOver}
         onDrop={handleDrop}
@@ -151,13 +143,13 @@ const Column = ({ column, isLoading, title }: dataProp) => {
           ? Array.from({ length: 5 }).map((_, index) => (
               <Card
                 key={index}
-                className="w-full animate-pulse bg-gray-200 rounded-md"
+                className="w-full animate-pulse my-10 bg-gray-100 rounded-md"
               >
                 <CardHeader>
-                  <div className="h-4 bg-gray-300 rounded-md w-3/4 mb-2"></div>
+                  <div className="h-4 bg-gray-200 rounded-md w-3/4 mb-2"></div>
                 </CardHeader>
                 <CardContent>
-                  <div className="h-3 bg-gray-300 rounded-md w-1/2"></div>
+                  <div className="h-3 bg-gray-200 rounded-md w-1/2"></div>
                 </CardContent>
               </Card>
             ))
@@ -165,14 +157,12 @@ const Column = ({ column, isLoading, title }: dataProp) => {
               <CardItem
                 key={cardItem.id}
                 cardItem={cardItem}
-                deleteCard={deleteCard}
                 handleDragStart={handleDragStart}
               />
             ))}
-        {/* {} */}
         <DropZone beforeId={null} column={column} />
       </div>
-    </div>
+    </>
   );
 };
 
