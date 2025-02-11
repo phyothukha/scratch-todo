@@ -11,7 +11,7 @@ const DropZone = ({
   return (
     <motion.div
       layout
-      className=" w-full h-[10px] rounded-md "
+      className=" w-full h-2 rounded-md "
       data-before={beforeId || "-1"}
       data-column={column}
     >

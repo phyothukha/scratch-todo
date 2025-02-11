@@ -18,6 +18,7 @@ import { useTodoStore } from "@/hooks/useTodoStore";
 import { Dialog, DialogTrigger } from "./ui/dialog";
 import UpdateTaskDialog from "./UpdateTaskDialog";
 import { ConfirmDialog } from "./ConfirmDialog";
+import DropZone from "./DropZone";
 
 interface cardItemProp {
   cardItem: CardProp;
@@ -41,6 +42,7 @@ const CardItem = ({ cardItem, handleDragStart }: cardItemProp) => {
   };
   return (
     <>
+      <DropZone beforeId={cardItem.id} column={cardItem.status} />
       <motion.div layout layoutId={cardItem.id}>
         <Card
           className=" relative shadow-lg "
