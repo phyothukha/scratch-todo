@@ -38,7 +38,11 @@ export const updateTaskStatus = async (card: CardProp): Promise<boolean> => {
     const response = await fetch("/api/todos", {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id: card.id, status: card.status }),
+      body: JSON.stringify({
+        id: card.id,
+        title: card.title,
+        status: card.status,
+      }),
     });
     return response.ok;
   } catch (error) {
